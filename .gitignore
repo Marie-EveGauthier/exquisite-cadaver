@@ -3,6 +3,6 @@ npm-debug.log
 /.grunt/
 /scss/
 /node_modules/
-/js/app.js
+/js/app-bundle.js
 /bower_components/
 /website/
