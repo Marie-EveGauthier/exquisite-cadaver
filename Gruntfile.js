@@ -55,6 +55,38 @@ module.exports = function(grunt) {
       }
 
 
+    },
+    copy: {
+      website: {
+        files: [
+          // includes files within path
+          {
+            expand: true,
+            src: [
+              'css/**',
+              'bower_components/foundation/css/normalize.css',
+              'bower_components/animate.css/animate.cs',
+              'bower_components/modernizr/modernizr.js',
+              'bower_components/jquery/dist/jquery.min.js',
+              'bower_components/foundation/js/foundation.min.js',
+              'html/**',
+              'images/**',
+              'js/app-bundle.js',
+              'index.html'
+            ],
+            dest: 'website/'
+          }
+        ],
+      }
+    },
+    'gh-pages': {
+      options: {
+        base: 'website'
+      },
+      src: ['**']
+    },
+    clean: {
+      website: ['css/', 'js/app-bundle.js', 'website/']
     }
   });
   // End config of tasks
@@ -63,7 +95,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-webpack');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-gh-pages');
 
   grunt.registerTask('build', ['sass', 'webpack']);
   grunt.registerTask('default', ['build', 'watch']);
+  grunt.registerTask('deploy', ['clean:website', 'build', 'copy:website', 'gh-pages']);
 };
