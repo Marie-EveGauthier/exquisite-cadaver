@@ -147,7 +147,6 @@
 	if (window.localStorage.getItem('userId') === null) {
 	    window.localStorage.setItem('userId', -1);
 	}
-	console.log(window.localStorage.getItem('accessToken'), window.localStorage.getItem('storyId'), window.localStorage.getItem('userId'), "hello from display.js!");
 
 
 	//This function creates the header in each view 
@@ -2562,7 +2561,7 @@
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"large-6 columns\">\n            <div class=\"signup-panel\">\n                <p class=\"welcome\"> Welcome Back! </p>\n                <form>\n                    <div class=\"row collapse\">\n                        <div class=\"small-2 columns\">\n                            <span class=\"prefix\"><i class=\"fi-mail\"></i></span>\n                        </div>\n                        <div class=\"small-10  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\">\n                        </div>\n                    </div>\n                    <div class=\"row collapse\">\n                        <div class=\"small-2 columns \">\n                            <span class=\"prefix\"><i class=\"fi-lock\"></i></span>\n                        </div>\n                        <div class=\"small-10 columns \">\n                            <input class=\"pass\" type=\"password\" placeholder=\"password\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"signin\">Sign in!</button>\n                <p>Don't have an account? <a href=\"#register\">Sign up here &raquo;</a></p>\n                <p><a href=\"#password\">Forgot your password?</a></p>\n            </div>\n        </div>\n    </div>\n\n\n    "
+	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"small-12 columns\">\n            <div class=\"signup-panel\">\n                <p class=\"welcome\"> Welcome Back! </p>\n                <form>\n                    <div class=\"row collapse\">\n                        <div class=\"small-10  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\" autocomplete=\"on\">\n                        </div>\n                    </div>\n                    <div class=\"row collapse\">\n                        <div class=\"small-10 columns \">\n                            <input class=\"pass\" type=\"password\" placeholder=\"password\" autocomplete=\"on\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"signin\">Sign in!</button>\n                <p>Don't have an account? <a href=\"#register\">Sign up here &raquo;</a></p>\n                <p><a href=\"#password\">Forgot your password?</a></p>\n            </div>\n        </div>\n    </div>\n\n\n    "
 
 /***/ },
 /* 17 */
