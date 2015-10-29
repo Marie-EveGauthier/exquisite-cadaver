@@ -72,7 +72,8 @@ module.exports = function(grunt) {
               'html/**',
               'images/**',
               'js/app-bundle.js',
-              'index.html'
+              'index.html',
+              'CNAME'
             ],
             dest: 'website/'
           }
