@@ -133,7 +133,7 @@ function seeCompletedStories(pageNum) {
                 function(lines) {
                     $app.append("<h2>Story #" + id + "</h2>");
                     $app.append("<h3>Rating: " + rating + "</h3>");
-                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img class='downvoting" + id + "' src='../images/downarrow.png'><img class='upvoting" + id + "' src='../images/uparrow.png'></div>");
+                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img class='downvoting" + id + "' src='../assets/images/downarrow.png'><img class='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
                     $app.append('<ul class="no-bullet">');
                     lines.forEach(function(line){
                         console.log(line);

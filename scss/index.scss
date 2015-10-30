@@ -1,0 +1,125 @@
+@import "settings";
+@import "foundation";
+
+// As hex codes */
+
+$color-primary-0: #FDF5DF;	// Main Primary color */
+$color-primary-3: #887435;
+$color-primary-4: #433300;
+
+$color-secondary-1-0: #A199AB;	// Main Secondary color (1) */
+$color-secondary-1-3: #3F285C;
+$color-secondary-1-4: #16032E;
+
+$color-secondary-2-0: #919BA3;	// Main Secondary color (2) */
+$color-secondary-2-3: #264158;
+$color-secondary-2-4: #02192B;
+
+
+
+// As RGBa codes */
+
+$rgba-primary-0: rgba(253,245,223,1);	// Main Primary color */
+$rgba-primary-3: rgba(136,116, 53,1);
+$rgba-primary-4: rgba( 67, 51,  0,1);
+
+$rgba-secondary-1-0: rgba(161,153,171,1);	// Main Secondary color (1) */
+$rgba-secondary-1-3: rgba( 63, 40, 92,1);
+$dark-purple: rgba( 22,  3, 46,1);
+
+$rgba-secondary-2-0: rgba(145,155,163,1);	// Main Secondary color (2) */
+$rgba-secondary-2-3: rgba( 38, 65, 88,1);
+$dark-blue: rgba(  2, 25, 43,1);
+$dark-blue-unsaturated: rgba(  2, 25, 43,0.9);
+
+body {
+    text-align: center;
+    margin: 2rem;
+    background-image:url(../assets/images/skulls.png);
+}
+
+.aboutTheProjectAndRules{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    transition: height 3s;
+}
+
+#aboutBottom {
+    background-color: $rgba-primary-0;
+    position: absolute;
+    top: 30%;
+    left: 0;
+    right: 0;
+    bottom: -1em;
+    position: relative;
+}
+
+#aboutCover {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    background-color: $dark-blue-unsaturated;
+}
+
+img.decodemtlLogo {
+    width: 9rem;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+
+    
+// .letterTriangle {
+//     position: absolute;
+//     top: -142%;
+//     left: 0%;
+//     width: 142%;
+//     height: 142%;
+//     background: grey;
+//     box-sizing: border-box;
+//     outline: none;
+// }
+
+.letterTriangle {
+    font-size: 35px;
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    top: 1px;
+}
+
+.credit {
+    display: flex;
+}
+
+@media only screen and (max-width: 667px) {
+    .credit {
+        display:block
+    }    
+}
+
+li {
+    list-style-type: none;
+}
+
+#rulesBottomContentTitle{
+    color: $rgba-secondary-1-3;
+    font-size: 30px;
+}
+
+#aboutBottomContentTitle{
+    color: $rgba-secondary-1-3;
+    font-size: 30px;
+}
