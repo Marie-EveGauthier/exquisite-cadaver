@@ -20,13 +20,36 @@ $main-font-family: Lucidatypewriter, monospace;
 }
 
 
-button, .button.radius{
+button, .button.radius, button.button.round{
   @include button-custom;
     &:hover {
       background: $main-color;
       color: #F0F7DF;
   }
 } 
+
+button.button.round {
+    margin-top: 2rem;
+}
+
+#bottomButtonAbout{
+  @include button-custom;
+    &:hover {
+      background: $main-color;
+      color: #F0F7DF;
+  }
+  width: 20vw;
+  border-radius: 60px;
+  margin: 2rem;
+  
+} 
+
+@media only screen and (max-width: 667px) {
+    #bottomButtonAbout {
+        width: 30vw;
+        font-size: 15px;
+    }    
+}
 
 
 body {
@@ -131,6 +154,7 @@ h2{
     width: 100%;
     overflow: auto;
     transition: height 3s;
+    z-index: 100;
 }
 
 #aboutBottom {
@@ -207,6 +231,25 @@ img.decodemtlLogo {
     display: none;
 }
 
+.rigth {
+  background-color: $accent-color;
+  color: $background-color;
+}
+
+#header .active a {
+    background-color: $accent-color;
+    font-family: 'Cabin Sketch', cursive;
+    color: $background-color;
+}
+
+a {
+  color: $accent-color;
+}
+
+div#rulesBottomContentBody {
+    position: relative;
+    display: inline-block;
+}
 #logo {
   width: 500px;
   height: 80%;

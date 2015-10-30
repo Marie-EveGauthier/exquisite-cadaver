@@ -29,24 +29,15 @@ function createHeader(options) {
 }
 
 //This function creates the footer in each view
-var $footer = $('#footer');
+
 function createFooter(options) {
+    var $footer = $('#footer');
     $footer.html('');
     var entryTemplateText = require('raw!../views/footer.ejs');
     var template = _.template( entryTemplateText );
     var compiledTemplate = template();
     $footer.append(compiledTemplate);
 }
-
-//This function could deploy the layout with template
-
-//var $layout = $('#layout');
-//function deployingLayout() {
-//    var entryTemplateText = require('raw!../views/layout.ejs');
-//    var template = _.template( entryTemplateText );
-//    var compiledTemplate = template();
-//    $layout.append(compiledTemplate);
-//    }    
 
   
 
