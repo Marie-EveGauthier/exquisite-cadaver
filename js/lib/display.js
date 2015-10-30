@@ -605,11 +605,11 @@ function resetPassword() {
     var compiledTemplate = template();
     $app.append(compiledTemplate);
     
-    // $('.pass').bind('keypress', function(e) {
-    //     if (e.which == 13) {
-    //         $('#signin').click();
-    //     }
-    // });
+    $('.email').bind('keypress', function(e) {
+        if (e.which == 13) {
+            $('.reset').click();
+        }
+    });
     
     $(".reset").on('click' || 'keypress', function(){
         var email = $('input[class=email]').val();
@@ -661,7 +661,13 @@ function newPassword(token) {
     var compiledTemplate = template();
     $app.append(compiledTemplate);
     
-    $(".change").on('click' || 'keypress', function(){
+    $('.confirmPassword').bind('keypress', function(e) {
+        if (e.which == 13) {
+            $('.change').click();
+        }
+    });
+    
+    $('.change').on('click' || 'keypress', function(){
         var password = $('input[class=password]').val();
         var password2 = $('input[class=confirmPassword]').val();
           
