@@ -158,7 +158,7 @@ function seeCompletedStories(pageNum) {
                     // $app.append(compiledTemplate);
                     $app.append("<h2>Story #" + id + "</h2>");
                     $app.append("<h3>Rating: " + rating + "</h3>");
-                    $app.append("<div id='votingThanks" + id + "' data-reveal-id='voting'><img id='downvoting" + id + "' src='../images/downarrow.png'><img id='upvoting" + id + "' src='../images/uparrow.png'></div>");
+                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
                     $app.append('<ul class="no-bullet">');
                     lines.forEach(function(line){
                         $app.append("<li>" + line.lineText + "  <i class='grey'>@" + line.username + "</i></li>");
@@ -464,7 +464,7 @@ function userLogin() {
         
                         $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
                         $(document).off('closed.fndtn.reveal', '[data-reveal]');
-                        window.location.href = "app.html";
+                        window.location.href = "../../html/app.html";
                         });
                     });
             })
@@ -505,7 +505,7 @@ function userLogout() {
                 
                 $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
                 $(document).off('closed.fndtn.reveal', '[data-reveal]');
-                window.location.href = "../index.html";
+                window.location.href = "/index.html";
                 });
             })
             .fail(function(jqXHR, textStatus) {
@@ -578,7 +578,7 @@ function userReg() {
                 
                 $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
                 $(document).off('closed.fndtn.reveal', '[data-reveal]');
-                window.location.href = "app.html";
+                window.location.href = "../../html/app.html";
                 });
             })
             .fail(function(jqXHR, textStatus) {
@@ -635,7 +635,7 @@ function resetPassword() {
                 
                 $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
                 $(document).off('closed.fndtn.reveal', '[data-reveal]');
-                window.location.href = "app.html";
+                window.location.href = "../../html/app.html";
                 });
             })
             .fail(function(jqXHR, textStatus) {
@@ -682,7 +682,7 @@ function newPassword(token) {
     
                     $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
                     $(document).off('closed.fndtn.reveal', '[data-reveal]');
-                    window.location.href = "app.html";
+                    window.location.href = "../../html/app.html";
                     });
                 })
                 .fail(function(jqXHR, textStatus) {

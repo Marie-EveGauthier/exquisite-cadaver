@@ -292,7 +292,7 @@
 	                    // $app.append(compiledTemplate);
 	                    $app.append("<h2>Story #" + id + "</h2>");
 	                    $app.append("<h3>Rating: " + rating + "</h3>");
-	                    $app.append("<div id='votingThanks" + id + "' data-reveal-id='voting'><img id='downvoting" + id + "' src='../images/downarrow.png'><img id='upvoting" + id + "' src='../images/uparrow.png'></div>");
+	                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
 	                    $app.append('<ul class="no-bullet">');
 	                    lines.forEach(function(line){
 	                        $app.append("<li>" + line.lineText + "  <i class='grey'>@" + line.username + "</i></li>");
@@ -598,7 +598,7 @@
 	        
 	                        $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                        $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                        window.location.href = "app.html";
+	                        window.location.href = "../../html/app.html";
 	                        });
 	                    });
 	            })
@@ -639,7 +639,7 @@
 	                
 	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "../index.html";
+	                window.location.href = "/index.html";
 	                });
 	            })
 	            .fail(function(jqXHR, textStatus) {
@@ -712,7 +712,7 @@
 	                
 	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "app.html";
+	                window.location.href = "../../html/app.html";
 	                });
 	            })
 	            .fail(function(jqXHR, textStatus) {
@@ -769,7 +769,7 @@
 	                
 	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "app.html";
+	                window.location.href = "../../html/app.html";
 	                });
 	            })
 	            .fail(function(jqXHR, textStatus) {
@@ -816,7 +816,7 @@
 	    
 	                    $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                    $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                    window.location.href = "app.html";
+	                    window.location.href = "../../html/app.html";
 	                    });
 	                })
 	                .fail(function(jqXHR, textStatus) {
@@ -2563,7 +2563,7 @@
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"contain-to-grid fixed\">\n  <nav class=\"top-bar\" data-topbar role=\"navigation\">\n    <ul class=\"title-area\">\n      <li class=\"name\">\n        <h1><a href=\"../index.html\"><img src=\"../images/logo.png\"></a></h1>\n      </li>\n      <li class=\"toggle-topbar menu-icon\"><a href=\"#\"><span>Menu</span></a></li>\n    </ul>\n  \n    <section class=\"top-bar-section\"> \n       <!--Right Nav Section -->\n      <ul class=\"right\">\n        <% if (accessToken === \"-1\") { %>\n          <li class=\"active\"><a href=\"#login\">LOGIN</a></li>\n          <li class=\"active\"><a href=\"#register\">REGISTER</a></li>\n        <% } else {%>\n          <li class=\"active\"><a href=\"#logout\">LOGOUT</a></li>\n        <% } %>\n      </ul>\n    </section>\n  </nav> \n</div>\n\n"
+	module.exports = "\n<div class=\"contain-to-grid fixed\">\n  <nav class=\"top-bar\" data-topbar role=\"navigation\">\n    <ul class=\"title-area\">\n      <li class=\"name\">\n        <h1><a href=\"/index.html\"><img src=\"../assets/images/logo.png\"></a></h1>\n      </li>\n      <li class=\"toggle-topbar menu-icon\"><a href=\"#\"><span>Menu</span></a></li>\n    </ul>\n  \n    <section class=\"top-bar-section\"> \n       <!--Right Nav Section -->\n      <ul class=\"right\">\n        <% if (accessToken === \"-1\") { %>\n          <li class=\"active\"><a href=\"#login\">LOGIN</a></li>\n          <li class=\"active\"><a href=\"#register\">REGISTER</a></li>\n        <% } else {%>\n          <li class=\"active\"><a href=\"#logout\">LOGOUT</a></li>\n        <% } %>\n      </ul>\n    </section>\n  </nav> \n</div>\n\n"
 
 /***/ },
 /* 5 */
@@ -2635,13 +2635,13 @@
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "<h4>What would you like to do now?</h4>\n<a class=\"menu\" href=\"#continue\"><button>Continue another story</button></a><br/>\n<a class=\"menu\" href=\"#create\"><button>Create a new story</button></a><br/>\n<a class=\"menu\" href=\"#seeall\"><button>Rate the other stories</button></a><br/>\n<a class=\"menu\" href=\"#random\"><button>Read a story at random</button></a><br/>"
+	module.exports = "<h2>What would you like to do now?</h2>\n<a class=\"menu\" href=\"#continue\"><button>Continue another story</button></a><br/>\n<a class=\"menu\" href=\"#create\"><button>Create a new story</button></a><br/>\n<a class=\"menu\" href=\"#seeall\"><button>Rate the other stories</button></a><br/>\n<a class=\"menu\" href=\"#random\"><button>Read a story at random</button></a><br/>"
 
 /***/ },
 /* 17 */
 /***/ function(module, exports) {
 
-	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"large-6 columns\">\n            <div class=\"signup-panel\">\n                <!--<p class=\"welcome\"> Login </p>-->\n                <form autocomplete=\"on\">\n                    <div class=\"row collapse\">\n                        <div class=\"small-2 columns\">\n                            <span class=\"prefix\"><i class=\"fi-mail\"></i></span>\n                        </div>\n                        <div class=\"small-10  columns\">\n                            <input class= \"email\" autocomplete=\"on\" type=\"text\" placeholder=\"email\">\n                        </div>\n                    </div>\n                    <div class=\"row collapse\">\n                        <div class=\"small-2 columns \">\n                            <span class=\"prefix\"><i class=\"fi-lock\"></i></span>\n                        </div>\n                        <div class=\"small-10 columns \">\n                            <input class=\"pass\" autocomplete=\"off\" type=\"password\" placeholder=\"password\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"signin\">Log me in!</button>\n                <p>Don't have an account? <a href=\"#register\">Sign up here &raquo;</a></p>\n                <p><a href=\"#password\">Forgot your password?</a></p>\n            </div>\n        </div>\n    </div>\n\n\n    "
+	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"small-12 columns\">\n            <div class=\"signup-panel\">\n                <!--<p class=\"welcome\"> Login </p>-->\n                <form autocomplete=\"on\">\n                    <div class=\"row collapse\">\n                        <div class=\"small-12  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\" autocomplete=\"on\">\n                        </div>\n                    </div>\n                    <div class=\"row collapse\">\n                        <div class=\"small-12 columns \">\n                            <input class=\"pass\" type=\"password\" placeholder=\"password\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"signin\">Log me in!</button>\n                <p>Don't have an account? <a href=\"#register\">Sign up here &raquo;</a></p>\n                <p><a href=\"#password\">Forgot your password?</a></p>\n            </div>\n        </div>\n    </div>\n\n\n    "
 
 /***/ },
 /* 18 */
@@ -2665,7 +2665,7 @@
 /* 21 */
 /***/ function(module, exports) {
 
-	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n<div class=\"row\">\n  <div class=\"large-6 columns\">\n    <div class=\"signup-panel\">\n      <p class=\"welcome\"> Sign Up </p>\n      <form>\n        <div class=\"row collapse\">\n          <div class=\"small-2  columns\">\n            <span class=\"prefix\"><i class=\"fi-torso-female\"></i></span>\n          </div>\n          <div class=\"small-10  columns\">\n            <input class=\"user\" type=\"text\" placeholder=\"username\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-2 columns\">\n            <span class=\"prefix\"><i class=\"fi-mail\"></i></span>\n          </div>\n          <div class=\"small-10  columns\">\n            <input class=\"email\" type=\"text\" placeholder=\"email\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-2 columns \">\n            <span class=\"prefix\"><i class=\"fi-lock\"></i></span>\n          </div>\n          <div class=\"small-10 columns \">\n            <input class=\"password\" type=\"password\" placeholder=\"password (min. 8 characters)\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-2 columns \">\n            <span class=\"prefix\"><i class=\"fi-lock\"></i></span>\n          </div>\n          <div class=\"small-10 columns \">\n            <input class=\"confirmPassword\" type=\"password\" placeholder=\"confirm password\" required=\"\" name=\"confirmPassword\" data-invalid=\"\">\n          </div>\n        </div>\n      </form>\n      <button class=\"signup\">Sign Up! </button>\n      <p>Already have an account? <a href=\"#login\">Login here &raquo</a></p>\n    </div>\n  </div>\n</div>"
+	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n<div class=\"row\">\n  <div class=\"small-12 columns\">\n    <div class=\"signup-panel\">\n      <p class=\"welcome\"> Sign Up </p>\n      <form>\n        <div class=\"row collapse\">\n          <div class=\"small-12  columns\">\n            <input class=\"user\" type=\"text\" placeholder=\"username\" autocomplete=\"on\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-12  columns\">\n            <input class=\"email\" type=\"text\" placeholder=\"email\" autocomplete=\"on\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-12 columns \">\n            <input class=\"password\" type=\"password\" placeholder=\"password (min. 8 characters)\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-12 columns \">\n            <input class=\"confirmPassword\" type=\"password\" placeholder=\"confirm password\" required=\"\" name=\"confirmPassword\" data-invalid=\"\">\n          </div>\n        </div>\n      </form>\n      <button class=\"signup\">Sign Up! </button>\n      <p>Already have an account? <a href=\"#login\">Login here &raquo</a></p>\n    </div>\n  </div>\n</div>"
 
 /***/ },
 /* 22 */
@@ -2701,7 +2701,7 @@
 /* 27 */
 /***/ function(module, exports) {
 
-	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"large-6 columns\">\n            <div class=\"signup-panel\">\n                <p class=\"welcome\"> Forgot your password? </p>\n                <p>Enter your email below: </p>\n                <form>\n                    <div class=\"row collapse\">\n                        <div class=\"small-2 columns\">\n                            <span class=\"prefix\"><i class=\"fi-mail\"></i></span>\n                        </div>\n                        <div class=\"small-10  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"reset\"> Reset my password </button>\n             \n            </div>\n        </div>\n    </div>\n\n\n    "
+	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"small-12 columns\">\n            <div class=\"signup-panel\">\n                <p class=\"welcome\"> Forgot your password? </p>\n                <p>Enter your email below: </p>\n                <form>\n                    <div class=\"row collapse\">\n                        <div class=\"small-12  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"reset\"> Reset my password </button>\n             \n            </div>\n        </div>\n    </div>\n\n\n    "
 
 /***/ },
 /* 28 */
@@ -2719,7 +2719,7 @@
 /* 30 */
 /***/ function(module, exports) {
 
-	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n<div class=\"row\">\n  <div class=\"large-6 columns\">\n    <div class=\"signup-panel\">\n      <p class=\"welcome\"> Choose your new password </p>\n      <form>\n        <div class=\"row collapse\">\n          <div class=\"small-2 columns \">\n            <span class=\"prefix\"><i class=\"fi-lock\"></i></span>\n          </div>\n          <div class=\"small-10 columns \">\n            <input class=\"password\" type=\"password\" placeholder=\"new password (min. 8 characters)\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-2 columns \">\n            <span class=\"prefix\"><i class=\"fi-lock\"></i></span>\n          </div>\n          <div class=\"small-10 columns \">\n            <input class=\"confirmPassword\" type=\"password\" placeholder=\"confirm new password\" required=\"\" name=\"confirmPassword\" data-invalid=\"\">\n          </div>\n        </div>\n      </form>\n      <button class=\"change\"> Change password </button>\n    </div>\n  </div>\n</div>"
+	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n<div class=\"row\">\n  <div class=\"small-12 columns\">\n    <div class=\"signup-panel\">\n      <p class=\"welcome\"> Choose your new password </p>\n      <form>\n        <div class=\"row collapse\">\n          <div class=\"small-12 columns \">\n            <input class=\"password\" type=\"password\" placeholder=\"new password (min. 8 characters)\">\n          </div>\n        </div>\n        <div class=\"row collapse\">\n          <div class=\"small-12 columns \">\n            <input class=\"confirmPassword\" type=\"password\" placeholder=\"confirm new password\" required=\"\" name=\"confirmPassword\" data-invalid=\"\">\n          </div>\n        </div>\n      </form>\n      <button class=\"change\"> Change password </button>\n    </div>\n  </div>\n</div>"
 
 /***/ },
 /* 31 */

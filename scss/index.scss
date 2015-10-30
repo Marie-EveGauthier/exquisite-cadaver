@@ -1,0 +1,147 @@
+@import "settings";
+@import "foundation";
+@import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great|Sigmar+One|Rochester|Cabin+Sketch|Leckerli+One|Marck+Script|Sacramento|Lily+Script+One);
+
+$background-color: #F0F7DF;
+$accent-color: #4A9149;
+$accent-color-unsaturated: #9EC49D;
+$main-color: rgba(33,26,97,0.9);
+$main-color-unsaturated: rgba(109,111,120,1);
+
+$main-font-family: Lucidatypewriter, monospace;
+
+body {
+    text-align: center;
+    margin: 2rem;
+    background-image:url(../assets/images/skulls.png);
+    font-family: $main-font-family;
+}
+
+h1{
+    font-family: 'Sigmar One', cursive;
+    margin: 3rem;
+    margin-bottom: 0rem;
+}
+
+h2{
+    font-family: 'Rochester', cursive;
+    color: $main-color;
+}
+
+.homePageContent {
+    margin-top: 2rem;
+}
+
+p.intro {
+    margin-top: 2rem;
+}
+
+p {
+    text-align: justify;
+}
+
+
+.aboutTheProjectAndRules{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    transition: height 3s;
+}
+
+#aboutBottom {
+    background-color: $background-color;
+    position: absolute;
+    top: 29%;
+    left: 0;
+    right: 0;
+    bottom: -1em;
+    position: relative;
+}
+
+#aboutCover {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(109,111,120,0.8);
+}
+
+img.decodemtlLogo {
+    width: 9rem;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+
+    
+// .letterTriangle {
+//     position: absolute;
+//     top: -142%;
+//     left: 0%;
+//     width: 142%;
+//     height: 142%;
+//     background: grey;
+//     box-sizing: border-box;
+//     outline: none;
+// }
+
+.letterTriangle {
+    font-size: 35px;
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    top: 1px;
+}
+
+a.buttonAboutClose {
+    color: $main-color;
+    text-decoration: none; 
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 2rem;
+}
+
+
+.credit {
+    display: flex;
+}
+
+@media only screen and (max-width: 667px) {
+    .credit {
+        display:block
+    }    
+}
+
+li {
+    list-style-type: none;
+}
+
+
+#rulesBottomContentTitle, #aboutBottomContentTitle{
+    color: $main-color;
+    font-size: 30px;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+
+.buttonEnter, .buttonAbout{
+    font-size: 30px;
+    padding: 2rem;
+    color: $accent-color;
+    font-family: 'Cabin Sketch', cursive;
+    
+    &:hover{
+        color:$accent-color-unsaturated;
+        
+    }
+}
+

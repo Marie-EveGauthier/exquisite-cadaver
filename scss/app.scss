@@ -1,47 +1,36 @@
 @import "settings";
 @import "foundation";
-@import "custom";
+@import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great|Sigmar+One|Rochester|Cabin+Sketch|Leckerli+One|Marck+Script|Sacramento|Lily+Script+One);
 
-// Or selectively include components
-// @import
-//   "foundation/components/accordion",
-//   "foundation/components/alert-boxes",
-//   "foundation/components/block-grid",
-//   "foundation/components/breadcrumbs",
-//   "foundation/components/button-groups",
-//   "foundation/components/buttons",
-//   "foundation/components/clearing",
-//   "foundation/components/dropdown",
-//   "foundation/components/dropdown-buttons",
-//   "foundation/components/flex-video",
-//   "foundation/components/forms",
-//   "foundation/components/grid",
-//   "foundation/components/inline-lists",
-//   "foundation/components/joyride",
-//   "foundation/components/keystrokes",
-//   "foundation/components/labels",
-//   "foundation/components/magellan",
-//   "foundation/components/orbit",
-//   "foundation/components/pagination",
-//   "foundation/components/panels",
-//   "foundation/components/pricing-tables",
-//   "foundation/components/progress-bars",
-//   "foundation/components/reveal",
-//   "foundation/components/side-nav",
-//   "foundation/components/split-buttons",
-//   "foundation/components/sub-nav",
-//   "foundation/components/switches",
-//   "foundation/components/tables",
-//   "foundation/components/tabs",
-//   "foundation/components/thumbs",
-//   "foundation/components/tooltips",
-//   "foundation/components/top-bar",
-//   "foundation/components/type",
-//   "foundation/components/offcanvas",
-//   "foundation/components/visibility";
+
+$background-color: #F0F7DF;
+$accent-color: #4A9149;
+$accent-color-unsaturated: #9EC49D;
+$main-color: rgba(33,26,97,0.9);
+$main-color-unsaturated: rgba(109,111,120,1);
+
+$main-font-family: Lucidatypewriter, monospace;
+
+@mixin button-custom {
+  background: $main-color-unsaturated;
+  border-radius: 3px;
+  font-family: Lucidatypewriter, monospace;
+  color: $main-color;
+  width: 60vw;
+}
+
+
+button, .button.radius{
+  @include button-custom;
+    &:hover {
+      background: $main-color;
+      color: #F0F7DF;
+  }
+} 
+
 
 body {
-  background-image:url(../images/skulls.png);
+  background-image:url(../assets/images/skulls.png);
 }
 
 li {
@@ -77,7 +66,7 @@ textarea {
 
 #app {
   margin: auto;
-  max-width: 600px;
+  margin-top: 10%;
 }
 
 #footer {
@@ -127,5 +116,93 @@ textarea {
 }
 
 
+h2{
+    font-family: 'Rochester', cursive;
+    color: $main-color;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.aboutTheProjectAndRules{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    transition: height 3s;
+}
+
+#aboutBottom {
+    background-color: $background-color;
+    position: absolute;
+    top: 29%;
+    left: 0;
+    right: 0;
+    bottom: -1em;
+    position: relative;
+}
+
+#aboutCover {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(109,111,120,0.8);
+}
+
+.letterTriangle {
+    font-size: 35px;
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    top: 1px;
+}
+
+a.buttonAboutClose {
+    color: $main-color;
+    text-decoration: none; 
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 2rem;
+}
+
+.credit {
+    display: flex;
+}
+
+@media only screen and (max-width: 667px) {
+    .credit {
+        display:block
+    }    
+}
+
+.credisTitle{
+  font-family:'Cabin Sketch', cursive; ;
+}
 
 
+li {
+    list-style-type: none;
+}
+
+
+
+#rulesBottomContentTitle, #aboutBottomContentTitle{
+    color: $main-color;
+    font-size: 30px;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+
+img.decodemtlLogo {
+    width: 9rem;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}

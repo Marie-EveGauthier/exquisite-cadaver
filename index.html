@@ -6,6 +6,7 @@
     <!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home page - Exquisite Cadaver</title>
+
     <link rel="shortcut icon" href="images/favicon.ico">
         <link rel="stylesheet" href="bower_components/foundation/css/normalize.css" />
         <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
@@ -17,49 +18,55 @@
 
 <body>
 	<div class="homePageTitle">
-	    <h1>EXQUISITE<br/>CADAVER</h1>
+	    <h1>EXQUISITE CADAVER</h1>
             <h2>accidental stories</h2>
 	</div>
     <div class="homePageContent"> 
-        <p class="Intro">Also known as exquisite corpse or rotating
+        <p class="intro">Also known as exquisite corpse or rotating
 		corpse, Exquisite Cadaver a game in which a story is collectively written. This method of
 		storytelling comes in many flavours, and can even be applied to drawing 
-		(try it at home!). </p>
-		<p>In our version, each contributor is only allowed to see
-		what the previous contributor has written.</p>
-		<p>The game, whose name comes from the French "cadavre exquis", was popularized
-		by the French Surrealist movement.</p>
-		
-        <a class="buttonEnter" href="html/app.html">ENTER</a>
-        <img src="images/ribbon.gif" style="width:33%">  
-        <a id="bottomButtonAbout" class="buttonAbout">ABOUT</a>
+		(try it at home!).</p>
+		<p>
+		In our version, each contributor is only allowed to see
+		what the previous contributor has written.
+		</p>
+        <a class="buttonEnter" href="html/app.html">enter</a>
+        <a id="bottomButtonAbout" class="buttonAbout">about</a>
     
-		<div class="aboutTheProjectAndRules hide" >
-			<div id="aboutCover"></div>
-				<div id="aboutBottom">
-					<div id="aboutBottomContent">
-						<div class="aboutColumn" id="aboutBottomContentHeader">
-							<div id="aboutBottomContentTitle">ABOUT</div>
-						</div>
-						<div class="aboutColumn" id="aboutBottomContentBody">
+	<div class="aboutTheProjectAndRules hide" >
+			<div class="small-12 columns" id="aboutCover"></div>
+			<div class="small-12 columns" id="aboutBottom">
+				<div class='row"'>
+					<div class="small-1 columns" id="letterTriangle">
+						<a class="buttonAboutClose" href="#">X</a>
+					</div>
+					<div class="small-12 columns" id="aboutBottomContent">
+					<div class="small-10 small-centered columns" id="aboutBottomContentTitle">ABOUT</div>
+					<div class="small-10 small-centered columns" id="aboutBottomContentBody">
 						    <p>This online game is a final project for the 
                                 <a href="http://www.decodemtl.com/web-development-full-time/">
-                                <img class="decodemtlLogo" src="images/decodemtl-logo-black.png">
+                                <img class="decodemtlLogo" src="../assets/images/decodemtl-logo-black.png">
                                 </a>
                                 Web Development Bootcamp.
                             </p>
-                        </div>
-						<ul class="aboutColumn no-bullet" id="aboutBottomContentCredits">
+                    </div>
+                    <div class="credit">
+                    	
+                    <ul class="small-12 medium-6 colomns" id="aboutBottomContentCredits">
 							<li class="creditsTitle">Back-end development: </li>
 							<li><a href="http://cathe313.github.io/">Catherine Ducharme</a></li>
+					</ul>
+					<ul class="small-12 medium-6 colomns" id="aboutBottomContentCredits">		
 							<li class="creditsTitle">Front-end development: </li>
 							<li>Marie-Eve Gauthier</li>
-						</ul>
+					</ul>
 					</div>
-					<div class="aboutColumn" id="rulesBottomContentHeader">
-					    <div id="rulesBottomContentTitle">RULES</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns" id="rulesBottomContentHeader">
+					<div class="small-10 small-centered columns" id="rulesBottomContentTitle">RULES</div>
 					</div>
-					<div class="aboutColumn" id="rulesBottomContentBody">
+				<div class="small-12 small-centered medium 10 medium-centered" id="rulesBottomContentBody">
 					    <p>The exquisite cadaver, also known as exquisite corpse or rotating
 					    corpse, is a game in which a story is collectively written. This method of
 					    storytelling comes in many flavours, and can even be applied to drawing 
@@ -67,8 +74,9 @@
 					    what the previous contributor has written.
 					    The game, whose name comes from the French "cadavre exquis", was popularized
 					    by the French Surrealist movement.</p><br/>
+				</div>	    
 					    <p>There are few rules, but please abide by them!</p>
-					</div>
+					
 					<div class aboutColumn id="rulesBottomContentList">
 					    <ul class="aboutColumn no-bullet">
 					        <li>Proper spelling and grammar</li>
@@ -78,12 +86,9 @@
 					        <li>A lot of creativity! </li>
 					    </ul>
 					</div>
-					<div class="letterTriangle">
-						<a class="buttonAboutClose" href="#">X</a>
-					</div>
-				</div>		
-		    </div>
-		</div>
+				</div>	
+			</div>
+	</div>
    
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/foundation/js/foundation.min.js"></script>
