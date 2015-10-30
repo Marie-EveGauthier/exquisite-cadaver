@@ -63,7 +63,7 @@
 	});
 
 	var display = __webpack_require__(1);
-	var Backbone = __webpack_require__(31);
+	var Backbone = __webpack_require__(32);
 
 	var router = Backbone.Router.extend({
 	    routes: {
@@ -147,7 +147,9 @@
 	if (window.localStorage.getItem('userId') === null) {
 	    window.localStorage.setItem('userId', -1);
 	}
-
+	if (window.localStorage.getItem('username') === null) {
+	    window.localStorage.setItem('username', "Guest");
+	}
 
 	//This function creates the header in each view 
 	var $header = $('#header');
@@ -205,13 +207,18 @@
 	        $app.append(compiledTemplate);
 	        $('.length').off('click');
 	        
-	    
+	        //Triggers a click when the enter key is being pressed
+	        $('.newLine').keypress(function (e) {
+	            var key = e.which;
+	            if(key == 13) {
+	                $('#newStory').click();
+	                return false;  
+	            }
+	        });
+	        
 	        //The ajax function that's triggered when the button in createStory is clicked
 	        $('#newStory').on("click", function() {
 	        var newLine = $('input[class=newLine]').val();
-	        var userId = window.localStorage.getItem('userId');
-	        var userobject = $.getJSON(retrieval.API_URL + 'users/' + userId);
-	        var username = userobject.username;
 	    
 	        if (!newLine || newLine.length < 1) {
 	            //To create a modal reveal with a template to advise the user to write something
@@ -222,16 +229,35 @@
 	            $('#emptyLine').foundation('reveal', 'open');
 	        }
 	        else {
-	            $.ajax({method: "POST", url: retrieval.API_URL + 'Stories/newstory', data: {'length': numberOfLines, 'lineText': newLine, 'userId': userId, 'username': username}});
-	            var entryTemplateText = __webpack_require__(9);
-	            var template = _.template(entryTemplateText);
-	            var compiledTemplate = template();
-	            $app.append(compiledTemplate);
-	            $('#thanksToSubmitStory').foundation('reveal', 'open');
-	            $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
-	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "#choice";
-	            });
+	            var jqxhr = $.ajax({method: "POST", url: retrieval.API_URL + 'Stories/newstory', data: {'length': numberOfLines, 'lineText': newLine, 'userId': window.localStorage.getItem('userId'), 'username': window.localStorage.getItem('username')}})
+	                .done(function(data) {
+	                    var entryTemplateText = __webpack_require__(9);
+	                    var template = _.template(entryTemplateText);
+	                    var compiledTemplate = template();
+	                    $app.append(compiledTemplate);
+	                    $('#thanksToSubmitStory').foundation('reveal', 'open');
+	                    $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
+	                        $(document).off('closed.fndtn.reveal', '[data-reveal]');
+	                        window.location.href = "#choice";
+	                    });
+	                })
+	                .fail(function(jqXHR, textStatus) {
+	                    if (jqXHR.status == 401) {
+	                        var entryTemplateText = __webpack_require__(10);
+	                        var template = _.template(entryTemplateText);
+	                        var compiledTemplate = template();
+	                        $app.append(compiledTemplate);
+	                        
+	                        $('#problem').foundation('reveal', 'open');
+	                    } else {
+	                        entryTemplateText = __webpack_require__(10);
+	                        template = _.template(entryTemplateText);
+	                        compiledTemplate = template();
+	                        $app.append(compiledTemplate);
+	                        
+	                        $('#problem').foundation('reveal', 'open');
+	                    }
+	                });
 	        }
 	        });
 	    });
@@ -246,12 +272,6 @@
 	    $app.html(''); 
 	    createHeader();
 	    
-	    //This is the basic if we want to implemant a template 
-	    // var entryTemplateText = require('raw!../views/seeCompletedStories.ejs');
-	    // var template = _.template(entryTemplateText);
-	    // var compiledTemplate = template();
-	    // $app.append(compiledTemplate);
-	    
 	    $app.append('<a href="#"><button> Back to Main Menu </button></a>');
 	    // $app.append("<h3>All stories, descending order of rating:</h3>");
 	    retrieval.getStoriesByRating(pageNum).then(
@@ -265,25 +285,28 @@
 	                
 	                retrieval.getStoriesLines(story).then(
 	                function(lines) {
+	                    //This is the basic if we want to implemant a template 
+	                    // var entryTemplate = require('raw!../views/seeCompletedStories.ejs');
+	                    // var template = _.template(entryTemplate);
+	                    // var compiledTemplate = template();
+	                    // $app.append(compiledTemplate);
 	                    $app.append("<h2>Story #" + id + "</h2>");
 	                    $app.append("<h3>Rating: " + rating + "</h3>");
-	                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img class='downvoting" + id + "' src='../assets/images/downarrow.png'><img class='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
+	                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
 	                    $app.append('<ul class="no-bullet">');
 	                    lines.forEach(function(line){
-	                        console.log(line);
-	                        
 	                        $app.append("<li>" + line.lineText + "  <i class='grey'>@" + line.username + "</i></li>");
 	                    });
 	                    //Voting functions
 	                    var token = window.localStorage.getItem('accessToken');
 	                    
-	                    $('.upvoting' + id).on("click", function(){
+	                    $('#upvoting' + id).on("click", function(){
 	                        var alreadyVoted = JSON.parse(localStorage["storyId"]);
 	                        console.log(alreadyVoted);
 	                        
 	                        if (token === "-1") {
-	                            $('#votingThanks').on("click", function(){
-	                            var entryTemplateText = __webpack_require__(10);
+	                            $('#votingThanks' + id).on("click", function(){
+	                            var entryTemplateText = __webpack_require__(11);
 	                            var template = _.template(entryTemplateText);
 	                            var compiledTemplate = template();
 	                            $app.append(compiledTemplate);
@@ -302,8 +325,8 @@
 	                            // alreadyVoted.append(id);
 	                            // localStorage["storyId"] = JSON.stringify(alreadyVoted);
 	                            
-	                        $('#votingThanks').on("click", function(){
-	                            var entryTemplateText = __webpack_require__(11);
+	                        $('#votingThanks' + id).on("click", function(){
+	                            var entryTemplateText = __webpack_require__(12);
 	                            var template = _.template(entryTemplateText);
 	                            var compiledTemplate = template();
 	                            $app.append(compiledTemplate);
@@ -316,10 +339,10 @@
 	                        }
 	                    });
 	                    
-	                    $('.downvoting' + id).click(function(){
+	                    $('#downvoting' + id).click(function(){
 	                        if (token === "-1") {
-	                            $('#votingThanks').on("click", function(){
-	                                var entryTemplateText = __webpack_require__(10);
+	                            $('#votingThanks' + id).on("click", function(){
+	                                var entryTemplateText = __webpack_require__(11);
 	                                var template = _.template(entryTemplateText);
 	                                var compiledTemplate = template();
 	                                $app.append(compiledTemplate);
@@ -338,8 +361,8 @@
 	                            // alreadyVoted.append(id);
 	                            // localStorage["storyId"] = JSON.stringify(alreadyVoted);
 	                            
-	                            $('#votingThanks').on("click", function(){
-	                                var entryTemplateText = __webpack_require__(11);
+	                            $('#votingThanks' + id).on("click", function(){
+	                                var entryTemplateText = __webpack_require__(12);
 	                                var template = _.template(entryTemplateText);
 	                                var compiledTemplate = template();
 	                                $app.append(compiledTemplate);
@@ -390,7 +413,7 @@
 	                    $app.html('');
 	                    $buttons.html('');
 	                    createHeader();
-	                    var entryTemplateText = __webpack_require__(12);
+	                    var entryTemplateText = __webpack_require__(13);
 	                    var template = _.template(entryTemplateText);
 	                    var compiledTemplate = template({'lines':lines, 'storyId':storyId});
 	                    $app.append(compiledTemplate);
@@ -433,33 +456,34 @@
 	                        if (lastLine === 0){
 	                            getStoryToContinue();
 	                        } else{
-	                            //This creates (with a template) the form to continue the story 
+
+	                            //This creates (with a template) the form to continue the story     
+	                            var entryTemplateText = __webpack_require__(14);
+	                            var template = _.template(entryTemplateText);
+	                            var compiledTemplate = template({'previousLine':previousLine, 'linesOfSelectedStory':linesOfSelectedStory, 'storyId':storyId, 'lastLine':lastLine, 'storyLength':storyLength});
+	                            $app.append(compiledTemplate);
 	                            
-	                            
-	                            
-	                                var entryTemplateText = __webpack_require__(13);
-	                                var template = _.template(entryTemplateText);
-	                                var compiledTemplate = template({'previousLine':previousLine, 'linesOfSelectedStory':linesOfSelectedStory, 'storyId':storyId, 'lastLine':lastLine, 'storyLength':storyLength});
-	                                
-	                                
-	                                
-	                                $app.append(compiledTemplate);
-	                                
-	                    /*            To add a character countdown to show how much space they have remaining
+	                            /* To add a character countdown to show how much space they have remaining
 	                            var maxLength = 60;
 	                            $('.newLine').keyup(function() {
 	                              var length = $(this).val().length;
 	                              var length = maxLength-length;
 	                             $('#chars').text(length);
 	                            
-	                            });   */         
-	                     
+	                            });   */    
+	                            
+	                            $('.newLine').keypress(function (e) {
+	                                 var key = e.which;
+	                                 if(key == 13) {
+	                                    $('#submit').click();
+	                                    return false;  
+	                                  }
+	                            });
+	 
 	                            //The ajax function that's triggered when the button is clicked
 	                            $('#submit').on("click", function(){
 	                                var newLine = $('.newLine').val();
-	                                var userId = window.localStorage.getItem('userId');
-	                                var userobject = $.getJSON(retrieval.API_URL + 'users/' + userId);
-	                                var username = userobject.username;
+	                                console.log(newLine);
 	                            
 	                                if (newLine === undefined || newLine.length < 1) {
 	                                    //To create a modal reveal with a template to advise the user to write something
@@ -469,15 +493,35 @@
 	                                    $app.append(compiledTemplate);
 	                                    $('#emptyLine').foundation('reveal', 'open');
 	                                } else {
-	                                    $.ajax({method: "POST", url: retrieval.API_URL + 'Lines/newline', data: {'lineNumber': (lastLine + 1), 'storyId': storyId, 'lineText': newLine, 'userId': userId, 'username': username }});
-	                                    var entryTemplateText = __webpack_require__(14);
-	                                    var template = _.template(entryTemplateText);
-	                                    var compiledTemplate = template();
-	                                    $app.append(compiledTemplate);
-	                                    $('#thanksToSubmitLine').foundation('reveal', 'open');
-	                                    $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
-	                                        $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                                        window.location.href = "#choice";
+	                                    var jqxhr = $.ajax({method: "POST", url: retrieval.API_URL + 'Lines/newline', data: {'lineNumber': (lastLine + 1), 'storyId': storyId, 'lineText': newLine, 'userId': window.localStorage.getItem('userId'), 'username': window.localStorage.getItem('username') }})
+	                                    .done(function(data) {
+	                                        var entryTemplateText = __webpack_require__(15);
+	                                        var template = _.template(entryTemplateText);
+	                                        var compiledTemplate = template();
+	                                        $app.append(compiledTemplate);
+	                                        $('#thanksToSubmitLine').foundation('reveal', 'open');
+	                                        $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
+	                                            $(document).off('closed.fndtn.reveal', '[data-reveal]');
+	                                            window.location.href = "#choice";
+	                                        });                                        
+	                                    })
+	                                    .fail(function(jqXHR, textStatus) {
+	                                        if (jqXHR.status == 401) {
+	                                            var entryTemplateText = __webpack_require__(10);
+	                                            var template = _.template(entryTemplateText);
+	                                            var compiledTemplate = template();
+	                                            $app.append(compiledTemplate);
+	                                            
+	                                            $('#problem').foundation('reveal', 'open');
+	                                        } else {
+	                                            entryTemplateText = __webpack_require__(10);
+	                                            template = _.template(entryTemplateText);
+	                                            compiledTemplate = template();
+	                                            $app.append(compiledTemplate);
+	                                            
+	                                            $('#problem').foundation('reveal', 'open');
+	                                        }
+
 	                                    });
 	            
 	                                }    
@@ -500,7 +544,7 @@
 	    $app.html('');
 	    createHeader();
 	    
-	    var entryTemplateText = __webpack_require__(15);
+	    var entryTemplateText = __webpack_require__(16);
 	    var template = _.template(entryTemplateText);
 	    var compiledTemplate = template();
 	    $app.append(compiledTemplate);
@@ -513,54 +557,61 @@
 	    $buttons.html('');
 	    $app.html('');
 	    createHeader();
-	    var entryTemplateText = __webpack_require__(16);
+	    var entryTemplateText = __webpack_require__(17);
 	    var template = _.template( entryTemplateText );
 	    var compiledTemplate = template();
 	    $app.append(compiledTemplate);
 	    
-	    // $('.pass').bind('keypress', function(e) {
-	    //     if (e.which == 13) {
-	    //         $('#signin').click();
-	    //     }
-	    // });
+	    //Triggers a click when the enter key is being pressed
+	    $('.pass').keypress(function (e) {
+	        var key = e.which;
+	        if(key == 13) {
+	            $('.signin').click();
+	            return false;  
+	        }
+	    });
 	    
 	    $(".signin").on('click' || 'keypress', function(){
 	        var email = $('input[class=email]').val();
 	        var password = $('input[class=pass]').val();
 	        if (!email || !password) {
-	            var entryTemplateText = __webpack_require__(17);
+	            var entryTemplateText = __webpack_require__(18);
 	            var template = _.template(entryTemplateText);
 	            var compiledTemplate = template();
 	            $app.append(compiledTemplate);
 	            $('#emailAndPasswordMissing').foundation('reveal', 'open');
 	        }
 	        else {
-	             var jqxhr = $.ajax( {method: "POST", url: 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/login', data: {'email': email, 'password': password, 'ttl': 60*60*24*7*2 }})
+	             var jqxhr = $.ajax( {method: "POST", url: retrieval.API_URL + 'users/login', data: {'email': email, 'password': password, 'ttl': 60*60*24*7*2 }})
 	            .done(function(data) {
-
-	                window.localStorage.setItem('accessToken', data.id);
-	                window.localStorage.setItem('userId', data.userId);
-	                var entryTemplateText = __webpack_require__(18);
-	                var template = _.template(entryTemplateText);
-	                var compiledTemplate = template({'data':data});
-	                $app.append(compiledTemplate);
-	                $('#welcomeBack').foundation('reveal', 'open');
-
-	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
-	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "app.html";
-	                });
+	                var url = retrieval.API_URL + 'users/' + data.userId;
+	                var jqxhr = $.ajax( {method: "GET", url: url, data: {}})
+	                    .done(function(userObject){
+	                        window.localStorage.setItem('accessToken', data.id);
+	                        window.localStorage.setItem('userId', data.userId);
+	                        window.localStorage.setItem('username', userObject.username);
+	                        var entryTemplateText = __webpack_require__(19);
+	                        var template = _.template(entryTemplateText);
+	                        var compiledTemplate = template({'data':data});
+	                        $app.append(compiledTemplate);
+	                        $('#welcomeBack').foundation('reveal', 'open');
+	        
+	                        $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
+	                        $(document).off('closed.fndtn.reveal', '[data-reveal]');
+	                        window.location.href = "../../html/app.html";
+	                        });
+	                    });
 	            })
 	            .fail(function(jqXHR, textStatus) {
 	                if (jqXHR.status == 401) {
-	                var entryTemplateText = __webpack_require__(19);
+	                var entryTemplateText = __webpack_require__(10);
 	                var template = _.template(entryTemplateText);
 	                var compiledTemplate = template();
 	                $app.append(compiledTemplate);
 	                
 	                $('#problem').foundation('reveal', 'open');
 	                } else {
-	                    var entryTemplateText = __webpack_require__(19);
+	                    var entryTemplateText = __webpack_require__(10);
 	                    var template = _.template(entryTemplateText);
 	                    var compiledTemplate = template();
 	                    $app.append(compiledTemplate);
@@ -575,10 +626,11 @@
 
 	function userLogout() {
 
-	   var jqxhr = $.ajax({method: "POST", url: 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/logout?access_token=' + window.localStorage.getItem('accessToken')})
+	   var jqxhr = $.ajax({method: "POST", url: retrieval.API_URL + 'users/logout?access_token=' + window.localStorage.getItem('accessToken')})
 	            .done(function(data) {
 	                window.localStorage.setItem('accessToken', -1);
 	                window.localStorage.setItem('userId', -1);
+	                window.localStorage.setItem('username', "Guest");
 	                var entryTemplateText = __webpack_require__(20);
 	                var template = _.template(entryTemplateText);
 	                var compiledTemplate = template();
@@ -587,11 +639,11 @@
 	                
 	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "index.html";
+	                window.location.href = "/index.html";
 	                });
 	            })
 	            .fail(function(jqXHR, textStatus) {
-	                var entryTemplateText = __webpack_require__(19);
+	                var entryTemplateText = __webpack_require__(10);
 	                var template = _.template(entryTemplateText);
 	                var compiledTemplate = template();
 	                $app.append(compiledTemplate);
@@ -612,11 +664,14 @@
 	    var compiledTemplate = template();
 	    $app.append(compiledTemplate);
 	    
-	    // $('#password2').bind('keypress', function(e) {
-	    //     if (e.which == 13) {
-	    //         $('#signin').click();
-	    //     }
-	    // });
+	    //Triggers a click when the enter key is pressed
+	    $('.confirmPassword').keypress(function (e) {
+	        var key = e.which;
+	        if(key == 13) {
+	            $('.signup').click();
+	            return false;  
+	        }
+	    });
 	    
 	    $(".signup").on('click' || 'keypress', function(){
 	        var username = $('input[class=user]').val();
@@ -647,7 +702,7 @@
 	        }
 
 	        else{
-	            var jqxhr = $.ajax( {method: "POST", url:'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/newUser', data: {'username': username, 'email': email, 'password': password}} )
+	            var jqxhr = $.ajax( {method: "POST", url: retrieval.API_URL + 'users/newUser', data: {'username': username, 'email': email, 'password': password}} )
 	            .done(function(data) {
 	                var entryTemplateText = __webpack_require__(25);
 	                var template = _.template(entryTemplateText);
@@ -657,7 +712,7 @@
 	                
 	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "app.html";
+	                window.location.href = "../../html/app.html";
 	                });
 	            })
 	            .fail(function(jqXHR, textStatus) {
@@ -703,7 +758,7 @@
 	        }
 	        else {
 
-	            var jqxhr = $.ajax( {method: "POST", url: 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/reset', data: {'email': email}} )
+	            var jqxhr = $.ajax( {method: "POST", url: retrieval.API_URL + 'users/reset', data: {'email': email}} )
 	            .done(function(data) {
 	                var entryTemplateText = __webpack_require__(29);
 	                var template = _.template(entryTemplateText);
@@ -714,11 +769,11 @@
 	                
 	                $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
 	                $(document).off('closed.fndtn.reveal', '[data-reveal]');
-	                window.location.href = "app.html";
+	                window.location.href = "../../html/app.html";
 	                });
 	            })
 	            .fail(function(jqXHR, textStatus) {
-	                var entryTemplateText = __webpack_require__(19);
+	                var entryTemplateText = __webpack_require__(10);
 	                var template = _.template(entryTemplateText);
 	                var compiledTemplate = template();
 	                $app.append(compiledTemplate);
@@ -751,18 +806,37 @@
 	            alert("Please choose a password with at least 8 characters.");
 	        }
 	        else {
-	            $.ajax({method: "POST", url:retrieval.API_URL + 'users/changePassword', data: {'token': token, 'newPassword': password}}).then(
-	                function(result) {
-	                    console.log(result);
-	                    if (result) {
-	                        alert('Thanks, your password was changed.');
-	                        window.location.href="app.html";
+	            var jqxhr = $.ajax({method: "POST", url:retrieval.API_URL + 'users/changePassword', data: {'token': token, 'newPassword': password}})
+	                .done(function(data) {
+	                    var entryTemplateText = __webpack_require__(31);
+	                    var template = _.template(entryTemplateText);
+	                    var compiledTemplate = template({'data':data});
+	                    $app.append(compiledTemplate);
+	                    $('#welcomeBack').foundation('reveal', 'open');
+	    
+	                    $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
+	                    $(document).off('closed.fndtn.reveal', '[data-reveal]');
+	                    window.location.href = "../../html/app.html";
+	                    });
+	                })
+	                .fail(function(jqXHR, textStatus) {
+	                    if (jqXHR.status == 401) {
+	                    var entryTemplateText = __webpack_require__(10);
+	                    var template = _.template(entryTemplateText);
+	                    var compiledTemplate = template();
+	                    $app.append(compiledTemplate);
+	                    
+	                    $('#problem').foundation('reveal', 'open');
+	                    } else {
+	                        var entryTemplateText = __webpack_require__(10);
+	                        var template = _.template(entryTemplateText);
+	                        var compiledTemplate = template();
+	                        $app.append(compiledTemplate);
+	                        
+	                        $('#problem').foundation('reveal', 'open');
 	                    }
-	                    else {
-	                        alert("That didn't seem to work!");
-	                    }    
-	            });
-	              
+	                });
+	  
 	        }
 	    });        
 	    
@@ -790,7 +864,7 @@
 
 	
 	//Modify this variable after migrating the api to heroku
-	var API_URL = 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/';
+	var API_URL = 'https://exquisite-cadaver-api.herokuapp.com/api/';
 
 	var nbPerPage = 2;
 
@@ -2489,7 +2563,7 @@
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"contain-to-grid fixed\">\n  <nav class=\"top-bar\" data-topbar role=\"navigation\">\n    <ul class=\"title-area\">\n      <li class=\"name\">\n        <h1><a href=\"index.html\"><img src=\"../assets/images/logo.png\"></a></h1>\n      </li>\n      <li class=\"toggle-topbar menu-icon\"><a href=\"#\"><span>Menu</span></a></li>\n    </ul>\n  \n    <section class=\"top-bar-section\"> \n       <!--Right Nav Section -->\n      <ul class=\"right\">\n        <% if (accessToken === \"-1\") { %>\n          <li class=\"active\"><a href=\"#login\">LOGIN</a></li>\n          <li class=\"active\"><a href=\"#register\">REGISTER</a></li>\n        <% } else {%>\n          <li class=\"active\"><a href=\"#logout\">LOGOUT</a></li>\n        <% } %>\n      </ul>\n    </section>\n  </nav> \n</div>\n\n"
+	module.exports = "\n<div class=\"contain-to-grid fixed\">\n  <nav class=\"top-bar\" data-topbar role=\"navigation\">\n    <ul class=\"title-area\">\n      <li class=\"name\">\n        <h1><a href=\"/index.html\"><img src=\"../assets/images/logo.png\"></a></h1>\n      </li>\n      <li class=\"toggle-topbar menu-icon\"><a href=\"#\"><span>Menu</span></a></li>\n    </ul>\n  \n    <section class=\"top-bar-section\"> \n       <!--Right Nav Section -->\n      <ul class=\"right\">\n        <% if (accessToken === \"-1\") { %>\n          <li class=\"active\"><a href=\"#login\">LOGIN</a></li>\n          <li class=\"active\"><a href=\"#register\">REGISTER</a></li>\n        <% } else {%>\n          <li class=\"active\"><a href=\"#logout\">LOGOUT</a></li>\n        <% } %>\n      </ul>\n    </section>\n  </nav> \n</div>\n\n"
 
 /***/ },
 /* 5 */
@@ -2513,73 +2587,73 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div id=\"emptyLine\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Oops!</h2>\n    <p class=\"lead\">\"You haven't entered anything!\"</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "\n<div id=\"emptyLine\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Oops!</h2>\n    <p class=\"lead\">You haven't entered anything!</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"thanksToSubmitStory\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Thanks!</h2>\n    <p class=\"lead\">Your new story was submitted.</p>'\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<div id=\"thanksToSubmitStory\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Thanks!</h2>\n    <p class=\"lead\">Your new story was submitted.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"voting\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Wait a minute!</h2>\n    <p class=\"lead\">You must be logged in to vote!</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<div id=\"problem\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Oops! Something went wrong.</h2>\n    <p class=\"lead\">Please try again!</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 11 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"voting\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Thanks!</h2>\n    <p class=\"lead\">Your vote was submitted.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<div id=\"voting\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Wait a minute!</h2>\n    <p class=\"lead\">You must be logged in to vote!</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n\n<h2>Story # <%= storyId  %> </h2>\n\n<ul class=\"no-bullet\">\n\n    <% lines.forEach( function(line) { %>\n        <li><%= line.lineText %>  @<%= line.username %></li>\n    <% }); %>\n    \n</ul>\n\n<button id=\"randomize\">Gimme another!</button>\n\n"
+	module.exports = "<div id=\"voting\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Thanks!</h2>\n    <p class=\"lead\">Your vote was submitted.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 13 */
 /***/ function(module, exports) {
 
-	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n\n\n<form>\n    <fieldset class=\"small-12 columns\">\n        <legend>You are continuing story # <%= storyId %></legend>\n            \n             <% for(var i = 0; i < storyLength; i++) {  %>\n                \n                <div class=\"row\">\n                    <div class=\"small-2 columns\">\n                        <label class=\"inline\"><%= i + 1 %>.</label>\n                    </div>\n                    <div class=\"small-10 columns\">\n                        <% if (i === lastLine) {  %>\n                        <textarea class=\"newLine\" type=\"text\" placeholder=\"Go crazy!\" maxlength=\"60\" />\n                        <% } else if(i === lastLine - 1) { %>\n                        <textarea class=\"previousLine\" type=\"text\" disabled placeholder=\"<%= linesOfSelectedStory[lastLine - 1].lineText %>\"/>   \n                        <% } else {  %>\n                            <textarea type=\"text\" disabled/>\n                        <% } %>\n                    </div>\n                </div>\n            <% } %>\n\n                \n    </fieldset>\n</form>      \n\n<button id=\"submit\" data-reveal-id=\"emptyLine thanksToSubmit\">Submit line</button>\n                \n\n\n                        "
+	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n\n<h2>Story # <%= storyId  %> </h2>\n\n<ul class=\"no-bullet\">\n\n    <% lines.forEach( function(line) { %>\n        <li><%= line.lineText %>  <i class='grey'>@<%= line.username %></i></li>\n    <% }); %>\n    \n</ul>\n\n<button id=\"randomize\">Gimme another!</button>\n\n"
 
 /***/ },
 /* 14 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"thanksToSubmitLine\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Thanks!</h2>\n    <p class=\"lead\">Your new line was submitted.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<a href=\"#\"><button> Back to Main Menu </button></a>\n\n\n<form>\n    <fieldset class=\"small-12 columns\">\n        <legend>You are continuing story # <%= storyId %></legend>\n            \n             <% for(var i = 0; i < storyLength; i++) {  %>\n                \n                <div class=\"row\">\n                    <div class=\"small-2 columns\">\n                        <label class=\"inline\"><%= i + 1 %>.</label>\n                    </div>\n                    <div class=\"small-10 columns\">\n                        <% if (i === lastLine) {  %>\n                        <textarea class=\"newLine\" type=\"text\" placeholder=\"Go crazy!\" maxlength=\"60\" />\n                        <% } else if(i === lastLine - 1) { %>\n                        <textarea class=\"previousLine\" type=\"text\" disabled placeholder=\"<%= linesOfSelectedStory[lastLine - 1].lineText %>\"/>   \n                        <% } else {  %>\n                            <textarea type=\"text\" disabled/>\n                        <% } %>\n                    </div>\n                </div>\n            <% } %>\n\n                \n    </fieldset>\n</form>      \n\n<button id=\"submit\" data-reveal-id=\"emptyLine thanksToSubmit\">Submit line</button>\n                \n\n\n                        "
 
 /***/ },
 /* 15 */
 /***/ function(module, exports) {
 
-	module.exports = "<h4>What would you like to do now?</h4>\n<a class=\"menu\" href=\"#continue\"><button>Continue another story</button></a><br/>\n<a class=\"menu\" href=\"#create\"><button>Create a new story</button></a><br/>\n<a class=\"menu\" href=\"#seeall\"><button>Rate the other stories</button></a><br/>\n<a class=\"menu\" href=\"#random\"><button>Read a story at random</button></a><br/>"
+	module.exports = "<div id=\"thanksToSubmitLine\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Thanks!</h2>\n    <p class=\"lead\">Your new line was submitted.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"small-12 columns\">\n            <div class=\"signup-panel\">\n                <p class=\"welcome\"> Welcome Back! </p>\n                <form>\n                    <div class=\"row collapse\">\n                        <div class=\"small-12  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\" autocomplete=\"on\">\n                        </div>\n                    </div>\n                    <div class=\"row collapse\">\n                        <div class=\"small-12 columns \">\n                            <input class=\"pass\" type=\"password\" placeholder=\"password\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"signin\">Sign in!</button>\n                <p>Don't have an account? <a href=\"#register\">Sign up here &raquo;</a></p>\n                <p><a href=\"#password\">Forgot your password?</a></p>\n            </div>\n        </div>\n    </div>\n\n\n    "
+	module.exports = "<h2>What would you like to do now?</h2>\n<a class=\"menu\" href=\"#continue\"><button>Continue another story</button></a><br/>\n<a class=\"menu\" href=\"#create\"><button>Create a new story</button></a><br/>\n<a class=\"menu\" href=\"#seeall\"><button>Rate the other stories</button></a><br/>\n<a class=\"menu\" href=\"#random\"><button>Read a story at random</button></a><br/>"
 
 /***/ },
 /* 17 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"emailAndPasswordMissing\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <p class=\"lead\">Please enter your email and password.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "    <a href=\"#\"><button> Back to Main Menu </button></a>\n    <div class=\"row\">\n        <div class=\"small-12 columns\">\n            <div class=\"signup-panel\">\n                <!--<p class=\"welcome\"> Login </p>-->\n                <form autocomplete=\"on\">\n                    <div class=\"row collapse\">\n                        <div class=\"small-12  columns\">\n                            <input class= \"email\" type=\"text\" placeholder=\"email\" autocomplete=\"on\">\n                        </div>\n                    </div>\n                    <div class=\"row collapse\">\n                        <div class=\"small-12 columns \">\n                            <input class=\"pass\" type=\"password\" placeholder=\"password\">\n                        </div>\n                    </div>\n                </form>\n                <button class=\"signin\">Log me in!</button>\n                <p>Don't have an account? <a href=\"#register\">Sign up here &raquo;</a></p>\n                <p><a href=\"#password\">Forgot your password?</a></p>\n            </div>\n        </div>\n    </div>\n\n\n    "
 
 /***/ },
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"welcomeBack\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <p class=\"lead\">Welcome back <%= data.username %> !</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<div id=\"emailAndPasswordMissing\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <p class=\"lead\">Please enter your email and password.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"problem\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Oops! Something went wrong.</h2>\n    <p class=\"lead\">Please try again!</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<div id=\"welcomeBack\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <p class=\"lead\">Welcome back @<%= window.localStorage.getItem('username') %>!</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 20 */
@@ -2615,7 +2689,7 @@
 /* 25 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"registerConfirmation\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <p class=\"lead\">Welcome @ <%= data.response.username %>! We sent you a confirmation link by email. Click on it to complete your registration.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+	module.exports = "<div id=\"registerConfirmation\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <p class=\"lead\">Welcome @<%= data.response.username %>! We sent you a confirmation link by email. Click on it to complete your registration.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
 
 /***/ },
 /* 26 */
@@ -2649,6 +2723,12 @@
 
 /***/ },
 /* 31 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"problem\" class=\"reveal-modal\" data-reveal aria-labelledby=\"modalTitle\" aria-hidden=\"true\" role=\"dialog\">\n    <h2 id=\"modalTitle\">Great!</h2>\n    <p class=\"lead\">Your password was changed.</p>\n    <a class=\"close-reveal-modal\" aria-label=\"Close\">&#215;</a>\n</div>"
+
+/***/ },
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {//     Backbone.js 1.2.3
@@ -2667,7 +2747,7 @@
 
 	  // Set up Backbone appropriately for the environment. Start with AMD.
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3), __webpack_require__(32), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3), __webpack_require__(33), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
 	      // Export global even in AMD case in case this script is loaded with
 	      // others that may still expect a global Backbone.
 	      root.Backbone = factory(root, exports, _, $);
@@ -4549,7 +4629,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

@@ -1,42 +1,45 @@
 @import "settings";
 @import "foundation";
+@import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great|Sigmar+One|Rochester|Cabin+Sketch|Leckerli+One|Marck+Script|Sacramento|Lily+Script+One);
 
-// As hex codes */
+$background-color: #F0F7DF;
+$accent-color: #4A9149;
+$accent-color-unsaturated: #9EC49D;
+$main-color: rgba(33,26,97,0.9);
+$main-color-unsaturated: rgba(109,111,120,1);
 
-$color-primary-0: #FDF5DF;	// Main Primary color */
-$color-primary-3: #887435;
-$color-primary-4: #433300;
-
-$color-secondary-1-0: #A199AB;	// Main Secondary color (1) */
-$color-secondary-1-3: #3F285C;
-$color-secondary-1-4: #16032E;
-
-$color-secondary-2-0: #919BA3;	// Main Secondary color (2) */
-$color-secondary-2-3: #264158;
-$color-secondary-2-4: #02192B;
-
-
-
-// As RGBa codes */
-
-$rgba-primary-0: rgba(253,245,223,1);	// Main Primary color */
-$rgba-primary-3: rgba(136,116, 53,1);
-$rgba-primary-4: rgba( 67, 51,  0,1);
-
-$rgba-secondary-1-0: rgba(161,153,171,1);	// Main Secondary color (1) */
-$rgba-secondary-1-3: rgba( 63, 40, 92,1);
-$dark-purple: rgba( 22,  3, 46,1);
-
-$rgba-secondary-2-0: rgba(145,155,163,1);	// Main Secondary color (2) */
-$rgba-secondary-2-3: rgba( 38, 65, 88,1);
-$dark-blue: rgba(  2, 25, 43,1);
-$dark-blue-unsaturated: rgba(  2, 25, 43,0.9);
+$main-font-family: Lucidatypewriter, monospace;
 
 body {
     text-align: center;
     margin: 2rem;
     background-image:url(../assets/images/skulls.png);
+    font-family: $main-font-family;
 }
+
+h1{
+    font-family: 'Sigmar One', cursive;
+    margin: 3rem;
+    margin-bottom: 0rem;
+}
+
+h2{
+    font-family: 'Rochester', cursive;
+    color: $main-color;
+}
+
+.homePageContent {
+    margin-top: 2rem;
+}
+
+p.intro {
+    margin-top: 2rem;
+}
+
+p {
+    text-align: justify;
+}
+
 
 .aboutTheProjectAndRules{
     position: fixed;
@@ -49,9 +52,9 @@ body {
 }
 
 #aboutBottom {
-    background-color: $rgba-primary-0;
+    background-color: $background-color;
     position: absolute;
-    top: 30%;
+    top: 29%;
     left: 0;
     right: 0;
     bottom: -1em;
@@ -64,7 +67,7 @@ body {
     left: 0px;
     height: 100vh;
     width: 100%;
-    background-color: $dark-blue-unsaturated;
+    background-color: rgba(109,111,120,0.8);
 }
 
 img.decodemtlLogo {
@@ -100,6 +103,14 @@ img.decodemtlLogo {
     top: 1px;
 }
 
+a.buttonAboutClose {
+    color: $main-color;
+    text-decoration: none; 
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 2rem;
+}
+
+
 .credit {
     display: flex;
 }
@@ -114,12 +125,23 @@ li {
     list-style-type: none;
 }
 
-#rulesBottomContentTitle{
-    color: $rgba-secondary-1-3;
+
+#rulesBottomContentTitle, #aboutBottomContentTitle{
+    color: $main-color;
     font-size: 30px;
+    font-family: 'Cabin Sketch', cursive;
 }
 
-#aboutBottomContentTitle{
-    color: $rgba-secondary-1-3;
+
+.buttonEnter, .buttonAbout{
     font-size: 30px;
+    padding: 2rem;
+    color: $accent-color;
+    font-family: 'Cabin Sketch', cursive;
+    
+    &:hover{
+        color:$accent-color-unsaturated;
+        
+    }
 }
+
