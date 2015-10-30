@@ -492,7 +492,7 @@ function userLogin() {
 
 function userLogout() {
 
-   var jqxhr = $.ajax({method: "POST", url: 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/logout?access_token=' + window.localStorage.getItem('accessToken')})
+   var jqxhr = $.ajax({method: "POST", url: retrieval.API_URL + 'users/logout?access_token=' + window.localStorage.getItem('accessToken')})
             .done(function(data) {
                 window.localStorage.setItem('accessToken', -1);
                 window.localStorage.setItem('userId', -1);
@@ -505,7 +505,7 @@ function userLogout() {
                 
                 $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
                 $(document).off('closed.fndtn.reveal', '[data-reveal]');
-                window.location.href = "app.html";
+                window.location.href = "../index.html";
                 });
             })
             .fail(function(jqXHR, textStatus) {
@@ -568,7 +568,7 @@ function userReg() {
         }
 
         else{
-            var jqxhr = $.ajax( {method: "POST", url:'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/newUser', data: {'username': username, 'email': email, 'password': password}} )
+            var jqxhr = $.ajax( {method: "POST", url: retrieval.API_URL + 'users/newUser', data: {'username': username, 'email': email, 'password': password}} )
             .done(function(data) {
                 var entryTemplateText = require('raw!../views/registerConfirmationRevealModal.ejs');
                 var template = _.template(entryTemplateText);
@@ -624,7 +624,7 @@ function resetPassword() {
         }
         else {
 
-            var jqxhr = $.ajax( {method: "POST", url: 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/users/reset', data: {'email': email}} )
+            var jqxhr = $.ajax( {method: "POST", url: retrieval.API_URL + 'users/reset', data: {'email': email}} )
             .done(function(data) {
                 var entryTemplateText = require('raw!../views/passwordResetConfirmationRevealModal.ejs');
                 var template = _.template(entryTemplateText);
