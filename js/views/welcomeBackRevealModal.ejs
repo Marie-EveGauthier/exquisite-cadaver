@@ -1,4 +1,4 @@
 <div id="welcomeBack" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <p class="lead">Welcome back <%= data.username %> !</p>
+    <p class="lead">Welcome back @<%= window.localStorage.getItem('username') %>!</p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

@@ -9,12 +9,12 @@ full-stack web development bootcamp.
 This repo contains the front-end code of the app. The back-end is available at:
 https://github.com/Cathe313/exquisite-cadaver-loopback
 
-The app itself is online at http://www.exquisite-cadaver.com.
+The app itself is online at https://www.exquisitecadaver.net.
 
 The front-end uses:
 - Foundation (http://foundation.zurb.com/)
 - BackboneJS
-- Underscore
+- UnderscoreJS
 - NodeJS
 
 Grunt and Webpack were used for the development of this app.

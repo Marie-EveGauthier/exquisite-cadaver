@@ -1,5 +1,8 @@
 *.DS_Store
-css/
-bower_components/
-node_modules/
-js/app-bundle.js
+npm-debug.log
+/.grunt/
+/scss/
+/node_modules/
+/js/app-bundle.js
+/bower_components/
+/website/

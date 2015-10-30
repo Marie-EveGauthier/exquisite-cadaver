@@ -1,1 +1,17 @@
-<!-- At this point, we won't use a template for the function seeCompletedStories-->
+<a href="#"><button> Back to Main Menu </button></a>
+
+<h2>Story #<%= story.id  %> </h2>
+
+<h3>Rating: <%= rating %> </h3>
+
+<div id='votingThanks' data-reveal-id='voting'><img id='downvoting<%= id %>' src='../images/downarrow.png'><img id='upvoting<%= id %>' src='../images/uparrow.png'></div>
+
+<ul class="no-bullet">
+
+    <% lines.forEach( function(line) { %>
+        <li><%= line.lineText %>  <i class='grey'>@<%= line.username %></i></li>
+    <% }); %>
+    
+</ul>
+
+<button id="randomize">Gimme another!</button>

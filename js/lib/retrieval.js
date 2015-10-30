@@ -1,6 +1,6 @@
 
 //Modify this variable after migrating the api to heroku
-var API_URL = 'https://exquisite-cadaver-loopback-cathe313.c9.io/api/';
+var API_URL = 'https://exquisite-cadaver-api.herokuapp.com/api/';
 
 var nbPerPage = 2;
 
