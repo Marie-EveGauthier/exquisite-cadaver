@@ -158,7 +158,7 @@ function seeCompletedStories(pageNum) {
                     // $app.append(compiledTemplate);
                     $app.append("<h2>Story #" + id + "</h2>");
                     $app.append("<h3>Rating: " + rating + "</h3>");
-                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
+                    $app.append("<div id='votingThanks" + id + "' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
                     $app.append('<ul class="no-bullet">');
                     lines.forEach(function(line){
                         $app.append("<li>" + line.lineText + "  <i class='grey'>@" + line.username + "</i></li>");
@@ -167,8 +167,8 @@ function seeCompletedStories(pageNum) {
                     var token = window.localStorage.getItem('accessToken');
                     
                     $('#upvoting' + id).on("click", function(){
-                        var alreadyVoted = JSON.parse(localStorage["storyId"]);
-                        console.log(alreadyVoted);
+                        // var alreadyVoted = JSON.parse(localStorage["storyId"]);
+                        // console.log(alreadyVoted);
                         
                         if (token === "-1") {
                             $('#votingThanks' + id).on("click", function(){
