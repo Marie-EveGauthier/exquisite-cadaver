@@ -163,24 +163,15 @@
 	}
 
 	//This function creates the footer in each view
-	var $footer = $('#footer');
+
 	function createFooter(options) {
+	    var $footer = $('#footer');
 	    $footer.html('');
 	    var entryTemplateText = __webpack_require__(5);
 	    var template = _.template( entryTemplateText );
 	    var compiledTemplate = template();
 	    $footer.append(compiledTemplate);
 	}
-
-	//This function could deploy the layout with template
-
-	//var $layout = $('#layout');
-	//function deployingLayout() {
-	//    var entryTemplateText = require('raw!../views/layout.ejs');
-	//    var template = _.template( entryTemplateText );
-	//    var compiledTemplate = template();
-	//    $layout.append(compiledTemplate);
-	//    }    
 
 	  
 
@@ -2569,7 +2560,7 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = "<a href=\"layout.ejs\" id=\"bottomButtonAbout\" class=\"button radius\">ABOUT & RULES</a>"
+	module.exports = "\n    <a id=\"bottomButtonAbout\" class=\"button round\">ABOUT & RULES</a>\n"
 
 /***/ },
 /* 6 */

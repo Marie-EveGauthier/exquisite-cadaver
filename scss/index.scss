@@ -49,6 +49,7 @@ p {
     width: 100%;
     overflow: auto;
     transition: height 3s;
+    z-index: 100;
 }
 
 #aboutBottom {
@@ -145,3 +146,11 @@ li {
     }
 }
 
+a {
+  color: $accent-color;
+}
+
+div#rulesBottomContentBody {
+    position: relative;
+    display: inline-block;
+}
