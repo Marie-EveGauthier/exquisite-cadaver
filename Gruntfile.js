@@ -66,7 +66,7 @@ module.exports = function(grunt) {
             src: [
               'css/**',
               'bower_components/foundation/css/normalize.css',
-              'bower_components/animate.css/animate.cs',
+              'bower_components/animate.css/animate.css',
               'bower_components/modernizr/modernizr.js',
               'bower_components/jquery/dist/jquery.min.js',
               'bower_components/foundation/js/foundation.min.js',
