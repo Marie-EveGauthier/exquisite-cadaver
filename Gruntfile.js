@@ -66,12 +66,13 @@ module.exports = function(grunt) {
             src: [
               'css/**',
               'bower_components/foundation/css/normalize.css',
-              'bower_components/animate.css/animate.cs',
+              'bower_components/animate.css/animate.css',
               'bower_components/modernizr/modernizr.js',
               'bower_components/jquery/dist/jquery.min.js',
               'bower_components/foundation/js/foundation.min.js',
               'html/**',
               'images/**',
+              'assets/**',
               'js/app-bundle.js',
               'index.html',
               'CNAME'
@@ -83,7 +84,8 @@ module.exports = function(grunt) {
     },
     'gh-pages': {
       options: {
-        base: 'website'
+        base: 'website',
+        repo: 'git@github.com:Exquisite-Cadaver/Exquisite-Cadaver.git'
       },
       src: ['**']
     },

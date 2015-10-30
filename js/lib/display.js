@@ -149,7 +149,7 @@ function seeCompletedStories(pageNum) {
                     // $app.append(compiledTemplate);
                     $app.append("<h2>Story #" + id + "</h2>");
                     $app.append("<h3>Rating: " + rating + "</h3>");
-                    $app.append("<div id='votingThanks' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
+                    $app.append("<div id='votingThanks" + id + "' data-reveal-id='voting'><img id='downvoting" + id + "' src='../assets/images/downarrow.png'><img id='upvoting" + id + "' src='../assets/images/uparrow.png'></div>");
                     $app.append('<ul class="no-bullet">');
                     lines.forEach(function(line){
                         $app.append("<li>" + line.lineText + "  <i class='grey'>@" + line.username + "</i></li>");
@@ -158,8 +158,8 @@ function seeCompletedStories(pageNum) {
                     var token = window.localStorage.getItem('accessToken');
                     
                     $('#upvoting' + id).on("click", function(){
-                        var alreadyVoted = JSON.parse(localStorage["storyId"]);
-                        console.log(alreadyVoted);
+                        // var alreadyVoted = JSON.parse(localStorage["storyId"]);
+                        // console.log(alreadyVoted);
                         
                         if (token === "-1") {
                             $('#votingThanks' + id).on("click", function(){
@@ -243,8 +243,8 @@ function seeCompletedStories(pageNum) {
     ).then(
         function(hasNextPage) {
             //Previous page/next page buttons
-            var previousPage = $('<a href="#seeall/p' + (pageNum - 1) + '"><button class="button round">previous page</button></a>');
-            var nextPage = $('<a href="#seeall/p' + (pageNum + 1) + '"><button class="button round">next page</button></a>');
+            var previousPage = $('<a href="#seeall/p' + (pageNum - 1) + '"><button>previous page</button></a>');
+            var nextPage = $('<a href="#seeall/p' + (pageNum + 1) + '"><button>next page</button></a>');
     
             //disable first previous page button
             if (pageNum !== 0) {
@@ -596,11 +596,11 @@ function resetPassword() {
     var compiledTemplate = template();
     $app.append(compiledTemplate);
     
-    // $('.pass').bind('keypress', function(e) {
-    //     if (e.which == 13) {
-    //         $('#signin').click();
-    //     }
-    // });
+    $('.email').bind('keypress', function(e) {
+        if (e.which == 13) {
+            $('.reset').click();
+        }
+    });
     
     $(".reset").on('click' || 'keypress', function(){
         var email = $('input[class=email]').val();
@@ -652,7 +652,13 @@ function newPassword(token) {
     var compiledTemplate = template();
     $app.append(compiledTemplate);
     
-    $(".change").on('click' || 'keypress', function(){
+    $('.confirmPassword').bind('keypress', function(e) {
+        if (e.which == 13) {
+            $('.change').click();
+        }
+    });
+    
+    $('.change').on('click' || 'keypress', function(){
         var password = $('input[class=password]').val();
         var password2 = $('input[class=confirmPassword]').val();
           
