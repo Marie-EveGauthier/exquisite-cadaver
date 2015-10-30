@@ -252,8 +252,8 @@ function seeCompletedStories(pageNum) {
     ).then(
         function(hasNextPage) {
             //Previous page/next page buttons
-            var previousPage = $('<a href="#seeall/p' + (pageNum - 1) + '"><button class="button round">previous page</button></a>');
-            var nextPage = $('<a href="#seeall/p' + (pageNum + 1) + '"><button class="button round">next page</button></a>');
+            var previousPage = $('<a href="#seeall/p' + (pageNum - 1) + '"><button>previous page</button></a>');
+            var nextPage = $('<a href="#seeall/p' + (pageNum + 1) + '"><button>next page</button></a>');
     
             //disable first previous page button
             if (pageNum !== 0) {

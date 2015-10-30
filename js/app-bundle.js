@@ -386,8 +386,8 @@
 	    ).then(
 	        function(hasNextPage) {
 	            //Previous page/next page buttons
-	            var previousPage = $('<a href="#seeall/p' + (pageNum - 1) + '"><button class="button round">previous page</button></a>');
-	            var nextPage = $('<a href="#seeall/p' + (pageNum + 1) + '"><button class="button round">next page</button></a>');
+	            var previousPage = $('<a href="#seeall/p' + (pageNum - 1) + '"><button>previous page</button></a>');
+	            var nextPage = $('<a href="#seeall/p' + (pageNum + 1) + '"><button>next page</button></a>');
 	    
 	            //disable first previous page button
 	            if (pageNum !== 0) {
@@ -2563,13 +2563,13 @@
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"contain-to-grid fixed\">\n  <nav class=\"top-bar\" data-topbar role=\"navigation\">\n    <ul class=\"title-area\">\n      <li class=\"name\">\n        <h1><a href=\"/index.html\"><img src=\"../assets/images/logo.png\"></a></h1>\n      </li>\n      <li class=\"toggle-topbar menu-icon\"><a href=\"#\"><span>Menu</span></a></li>\n    </ul>\n  \n    <section class=\"top-bar-section\"> \n       <!--Right Nav Section -->\n      <ul class=\"right\">\n        <% if (accessToken === \"-1\") { %>\n          <li class=\"active\"><a href=\"#login\">LOGIN</a></li>\n          <li class=\"active\"><a href=\"#register\">REGISTER</a></li>\n        <% } else {%>\n          <li class=\"active\"><a href=\"#logout\">LOGOUT</a></li>\n        <% } %>\n      </ul>\n    </section>\n  </nav> \n</div>\n\n"
+	module.exports = "\n<div class=\"contain-to-grid fixed\">\n  <nav class=\"top-bar\" data-topbar role=\"navigation\">\n    <ul class=\"title-area\">\n      <li class=\"name\">\n        <h1><a href=\"/index.html\"><img id=\"logo\" src=\"../assets/images/logo2.png\"></a></h1>\n      </li>\n      <li class=\"toggle-topbar menu-icon\"><a href=\"#\"><span>Menu</span></a></li>\n    </ul>\n  \n    <section class=\"top-bar-section\"> \n       <!--Right Nav Section -->\n      <ul class=\"right\">\n        <% if (accessToken === \"-1\") { %>\n          <li class=\"active\"><a href=\"#login\">LOGIN</a></li>\n          <li class=\"active\"><a href=\"#register\">REGISTER</a></li>\n        <% } else {%>\n          <li class=\"active\"><a href=\"#logout\">LOGOUT</a></li>\n        <% } %>\n      </ul>\n    </section>\n  </nav> \n</div>\n\n"
 
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = "<a href=\"layout.ejs\" id=\"bottomButtonAbout\" class=\"button radius\">ABOUT & RULES</a>"
+	module.exports = "<a href=\"layout.ejs\" id=\"bottomButtonAbout\" class=\"button\">ABOUT & RULES</a>"
 
 /***/ },
 /* 6 */

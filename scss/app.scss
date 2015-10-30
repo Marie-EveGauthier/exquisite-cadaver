@@ -7,7 +7,7 @@ $background-color: #F0F7DF;
 $accent-color: #4A9149;
 $accent-color-unsaturated: #9EC49D;
 $main-color: rgba(33,26,97,0.9);
-$main-color-unsaturated: rgba(109,111,120,1);
+$main-color-unsaturated: rgba(155, 158, 171, 0.9);
 
 $main-font-family: Lucidatypewriter, monospace;
 
@@ -205,4 +205,9 @@ img.decodemtlLogo {
 
 .hide {
     display: none;
+}
+
+#logo {
+  width:50vh;
+  height: 10vw;
 }
